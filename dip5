@@ -1,0 +1,44 @@
+Using canny
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+image_path = 'images/image5.tif'
+img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+if img is None:
+    print("Error: Could not read the image.")
+else:
+    edges = cv2.Canny(img, 100, 200)
+    plt.figure(figsize=(6, 6))
+    plt.imshow(edges, cmap='gray')
+    plt.title('Canny Edge Detection')
+    plt.axis('off')
+    plt.show()
+    cv2.imwrite('images/canny_edges.jpg', edges)
+
+
+perform global and adaptive thresholding
+
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+image_path = 'images/image5.tif'
+img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+if img is None:
+    print("Error: Could not read the image.")
+else:
+    _, global_thresh = cv2.threshold(img, 127, 255, cv2.THRESH_BINARY)
+    adaptive_thresh = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,cv2.THRESH_BINARY, 11, 2)
+    plt.figure(figsize=(12, 6))
+    plt.subplot(1, 2, 1)
+    plt.imshow(global_thresh, cmap='gray')
+    plt.title('Global Thresholding')
+    plt.axis('off')
+    plt.subplot(1, 2, 2)
+    plt.imshow(adaptive_thresh, cmap='gray')
+    plt.title('Adaptive Thresholding')
+    plt.axis('off')
+    plt.tight_layout()
+    plt.show()
+    cv2.imwrite('images/global_thresh.jpg', global_thresh)
+    cv2.imwrite('images/adaptive_thresh.jpg', adaptive_thresh)
